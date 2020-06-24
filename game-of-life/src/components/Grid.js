@@ -119,6 +119,7 @@ const Grid = () => {
                 height: 20,
                 backgroundColor: grid[i][k] ? "black" : undefined,
                 border: "solid 1px black",
+                pointerEvents: running ? "none" : "auto",
               }}
             />
           ))
