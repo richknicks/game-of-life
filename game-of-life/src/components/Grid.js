@@ -1,6 +1,6 @@
 import React, { useState, useCallback, useRef } from "react";
+// import Generation from "./Generation";
 import produce from "immer";
-
 const numRows = 50;
 const numCols = 50;
 
@@ -24,13 +24,24 @@ const generateEmptyGrid = () => {
   return rows;
 };
 
+const Generation = () => {
+  const [genVal, setGenVal] = useState(0);
+  const generationValue = 0;
+  const generationValueRef = useRef(generationValue);
+  //   generationValue.Ref.current = generationValue;
+  //   setGenVal((genVal) => (genVal += 1));
+  return (
+    <div>
+      <h2>Generation : {genVal} </h2>
+    </div>
+  );
+};
 const Grid = () => {
   const [grid, setGrid] = useState(() => {
     return generateEmptyGrid();
   });
 
   const [running, setRunning] = useState(false);
-
   const runningRef = useRef(running);
   runningRef.current = running;
 
@@ -64,8 +75,10 @@ const Grid = () => {
 
     setTimeout(runSimulation, 1000);
   }, []);
+
   return (
     <>
+      <Generation />
       <button
         onClick={() => {
           setRunning(!running);
@@ -97,6 +110,20 @@ const Grid = () => {
         }}
       >
         Clear
+      </button>
+      <button
+        onClick={() => {
+          setTimeout(runSimulation, 500);
+        }}
+      >
+        Change Speed
+      </button>
+      <button
+        onClick={() => {
+          setTimeout(runSimulation, 1000 / 10);
+        }}
+      >
+        Change Grid Size
       </button>
       <div
         style={{
