@@ -1,8 +1,7 @@
 import React, { useState, useCallback, useRef } from "react";
-// import Generation from "./Generation";
+import { Route, Link } from "react-router-dom";
+import Generation from "./Generation";
 import produce from "immer";
-const numRows = 50;
-const numCols = 50;
 
 const operations = [
   [0, 1],
@@ -15,41 +14,60 @@ const operations = [
   [-1, 0],
 ];
 
-const generateEmptyGrid = () => {
-  const rows = [];
-  for (let i = 0; i < numRows; i++) {
-    rows.push(Array.from(Array(numCols), () => 0));
-  }
-
-  return rows;
-};
-
-const Generation = () => {
-  const [genVal, setGenVal] = useState(0);
-  const generationValue = 0;
-  const generationValueRef = useRef(generationValue);
-  //   generationValue.Ref.current = generationValue;
-  //   setGenVal((genVal) => (genVal += 1));
-  return (
-    <div>
-      <h2>Generation : {genVal} </h2>
-    </div>
-  );
-};
 const Grid = () => {
+  const [numRows, setNumRows] = useState(25);
+  const [numCols, setNumCols] = useState(25);
+  const generateEmptyGrid = () => {
+    const rows = [];
+    for (let i = 0; i < numRows; i++) {
+      rows.push(Array.from(Array(numCols), () => 0));
+    }
+
+    return rows;
+  };
   const [grid, setGrid] = useState(() => {
     return generateEmptyGrid();
   });
 
   const [running, setRunning] = useState(false);
+  const [genCount, setGenCount] = useState(0);
+  const [speed, setSpeed] = useState(100);
+  const [size, setSize] = useState(true);
+  const [gridSpace, setGridSpace] = useState(true);
+  const [sizeButton, setSizeButton] = useState(true);
   const runningRef = useRef(running);
   runningRef.current = running;
+  const generationCount = 0;
+  const generationCountRef = useRef(generationCount);
+  generationCountRef.current = generationCount;
+
+  const changeSpeed = (e) => {
+    if (!running) {
+      setSpeed(e.target.value);
+    }
+  };
+  const changeSize = (e) => {
+    if (!running) {
+      size ? setSize(false) : setSize(true);
+    }
+  };
+  const changeSizeButton = (e) => {
+    if (!running) {
+      sizeButton ? setSizeButton(false) : setSizeButton(true);
+    }
+  };
+  const changeGridSpace = (e) => {
+    if (!running) {
+      gridSpace ? setGridSpace(false) : setGridSpace(true);
+    }
+  };
 
   const runSimulation = useCallback(() => {
     if (!runningRef.current) {
       return;
     }
 
+    setGenCount((genCount) => (genCount += 1));
     setGrid((g) => {
       return produce(g, (gridCopy) => {
         for (let i = 0; i < numRows; i++) {
@@ -73,12 +91,15 @@ const Grid = () => {
       });
     });
 
-    setTimeout(runSimulation, 1000);
-  }, []);
+    setTimeout(runSimulation, speed);
+  }, [speed, numRows, numCols]);
 
   return (
     <>
-      <Generation />
+      <Link to="/">Home</Link>
+      <Link to="/rules">Rules</Link>
+      <Link to="/game">Game</Link>
+      <Generation genCount={genCount} />
       <button
         onClick={() => {
           setRunning(!running);
@@ -107,28 +128,34 @@ const Grid = () => {
       <button
         onClick={() => {
           setGrid(generateEmptyGrid());
+          setGenCount(0);
+          setSpeed(100);
         }}
       >
         Clear
       </button>
+      <form>
+        <label>
+          Speed in Milliseconds:
+          <input type="text" value={speed} onChange={changeSpeed} />
+        </label>
+      </form>
       <button
         onClick={() => {
-          setTimeout(runSimulation, 500);
+          changeSize();
+          changeGridSpace();
+          changeSizeButton();
         }}
       >
-        Change Speed
+        {sizeButton ? "Increase Grid Size" : "Decrease Grid Size"}
       </button>
-      <button
-        onClick={() => {
-          setTimeout(runSimulation, 1000 / 10);
-        }}
-      >
-        Change Grid Size
-      </button>
+
       <div
         style={{
           display: "grid",
-          gridTemplateColumns: `repeat(${numCols}, 20px)`,
+          gridTemplateColumns: gridSpace
+            ? `repeat(${numCols},  20px)`
+            : `repeat(${numCols},  40px)`,
         }}
       >
         {grid.map((rows, i) =>
@@ -142,8 +169,8 @@ const Grid = () => {
                 setGrid(newGrid);
               }}
               style={{
-                width: 20,
-                height: 20,
+                width: size ? 20 : 40,
+                height: size ? 20 : 40,
                 backgroundColor: grid[i][k] ? "black" : undefined,
                 border: "solid 1px black",
                 pointerEvents: running ? "none" : "auto",

@@ -1,10 +1,11 @@
-// import React, { useState } from "react";
-// import { genVal } from "./Grid";
-// const Generation = () => {
-//   return (
-//     <div>
-//       <h2>Generation : {genVal}</h2>
-//     </div>
-//   );
-// };
-// export default Generation;
+import React from "react";
+
+function GenDisplay({ genCount }) {
+  return (
+    <div>
+      <h3>{`Number of Generations: ${genCount}`}</h3>
+    </div>
+  );
+}
+
+export default GenDisplay;
