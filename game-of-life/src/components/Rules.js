@@ -10,6 +10,7 @@ const MainDiv = styled.div`
   }
   p {
     font-family: "Holtwood One SC", serif;
+    color: #ffa500;
   }
 `;
 const Rules = () => {

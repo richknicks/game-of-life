@@ -14,7 +14,7 @@ const MainDiv = styled.div`
     font-family: Arial;
     font-size: 20px;
     font-weight: bold;
-    padding: 13px 32px;
+    padding: 8px 16px;
     text-decoration: none;
     text-shadow: 0px 1px 0px #3d768a;
   }
@@ -193,7 +193,7 @@ const Grid = () => {
                 width: size ? 20 : 40,
                 height: size ? 20 : 40,
                 backgroundColor: grid[i][k] ? "yellow" : undefined,
-                border: "solid 1px black",
+                border: "solid 1px green",
                 pointerEvents: running ? "none" : "auto",
               }}
             />

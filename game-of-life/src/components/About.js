@@ -5,8 +5,10 @@ const MainDiv = styled.div`
   width: 500px;
   line-height: 3rem;
   justify-content: center;
+
   p {
     font-family: "Holtwood One SC", serif;
+    color: #ffa500;
   }
 `;
 const About = () => {
