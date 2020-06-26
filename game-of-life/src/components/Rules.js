@@ -1,8 +1,20 @@
 import React from "react";
-import { Route, Link } from "react-router-dom";
+import styled from "styled-components";
+const MainDiv = styled.div`
+  background-color: #c1091f;
+  width: 500px;
+  line-height: 3rem;
+  justify-content: center;
+  h3 {
+    font-family: "Holtwood One SC", serif;
+  }
+  p {
+    font-family: "Holtwood One SC", serif;
+  }
+`;
 const Rules = () => {
   return (
-    <div className="rules">
+    <MainDiv>
       <h3>Rules of the Game:</h3>
       <p>
         1. Any live cell with fewer than 2 live neighbors dies, as if by
@@ -20,7 +32,7 @@ const Rules = () => {
         4. Any dead cell with exactly 3 live neighbors becomes a live cell, as
         if by reproduction.
       </p>
-    </div>
+    </MainDiv>
   );
 };
 export default Rules;
