@@ -177,6 +177,7 @@ const Grid = () => {
           gridTemplateColumns: gridSpace
             ? `repeat(${numCols},  20px)`
             : `repeat(${numCols},  40px)`,
+          paddingBottom: 300,
         }}
       >
         {grid.map((rows, i) =>

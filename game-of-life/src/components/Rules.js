@@ -5,6 +5,7 @@ const MainDiv = styled.div`
   width: 500px;
   line-height: 3rem;
   justify-content: center;
+  height: 1200px;
   h3 {
     font-family: "Holtwood One SC", serif;
   }
